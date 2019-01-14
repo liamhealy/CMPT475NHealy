@@ -1,0 +1,127 @@
+<!-- HR APP REQUEST COMPONENT -->
+<div class="container">
+  <div class="row text-center">
+    <!-- TITLE -->
+    <div class="col header">
+      <h1>{{ 'HRAppRequest.HRAppRequestTitle' | translate }}</h1>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col">
+      <!-- PENDING TABLE -->
+      <h3 class="table-header">{{ 'HRAppRequest.PendingTitle' | translate }}</h3>
+      <!-- <p-table [value]="pendingPermissions"> -->
+      <p-table #dt [columns]="pendingCols" [value]="pendingPermissions"
+      [rows]="10" [resizableColumns]="true" [paginator]="false" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of pendingCols" [width]="col.width" [pSortableColumn]="col.field"
+              pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th colspan="2">{{ 'HRAppRequest.PermissionColTitle' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td *ngFor="let col of pendingCols">
+              {{permission[col.field]}}
+            </td>
+            <td>
+              <button type='button' class="btn btn-success" (click)="showAcceptDialog(permission)">{{ 'HRAppRequest.AcceptButton'
+                | translate }}</button>
+            </td>
+            <td>
+              <button type='button' class="btn btn-danger" (click)="showDeclineDialog(permission)">{{
+                'HRAppRequest.DeclineButton' | translate }}</button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="4">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!-- ACCEPTED TABLE -->
+      <h3 class="table-header">{{ 'HRAppRequest.AcceptedTitle' | translate }}</h3>
+      <p-table [value]="acceptedPermisions" [rows]="10" [resizableColumns]="true" 
+        [paginator]="false" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of acceptedCols" [width]="col.width" [pSortableColumn]="col.field"
+              pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th>{{ 'HRAppRequest.PermissionColTitle' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td *ngFor="let col of acceptedCols">
+              {{permission[col.field]}}
+            </td>
+            <td>
+              <button type='button' class="btn btn-danger" (click)="showDeclineDialog(permission)">{{
+                'HRAppRequest.DeclineButton' | translate }}</button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="6">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!-- DECLINED TABLE -->
+      <h3 class="table-header">{{ 'HRAppRequest.DeclinedTitle' | translate }}</h3>
+      <p-table [value]="declinedPermissions"[rows]="10" [resizableColumns]="true" 
+        [paginator]="false" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of declinedCols" [width]="col.width" [pSortableColumn]="col.field"
+              pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th>{{ 'HRAppRequest.PermissionColTitle' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td *ngFor="let col of declinedCols">
+              {{permission[col.field]}}
+            </td>
+            <td>
+              <button type='button' class="btn btn-success" (click)="showAcceptDialog(permission)">{{ 'HRAppRequest.AcceptButton'
+                | translate }}</button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="6">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-dialog header="Decline Request" [(visible)]="displayDecline" [modal]="true">
+        <p>Are you sure you want to decline the request?</p>
+        <button type="button" class="btn btn-primary" style="margin:5px;" (click)="onConfirm()">Confirm</button>
+        <button type="button" class="btn btn-danger" style="margin:5px;" (click)="onCancel()">Cancel</button>
+      </p-dialog>
+      <p-dialog header="Accept Request" [(visible)]="displayAccept" [modal]="true">
+        <p>Are you sure you want to accept the request?</p>
+        <button type="button" class="btn btn-primary" style="margin:5px;" (click)="onConfirm()">Confirm</button>
+        <button type="button" class="btn btn-danger" style="margin:5px;" (click)="onCancel()">Cancel</button>
+      </p-dialog>
+    </div>
+  </div>
+</div>

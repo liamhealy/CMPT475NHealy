@@ -1,0 +1,75 @@
+<!-- APPLICATIONS COMPONENT -->
+<div class="container" [formGroup]="appForm">
+  <!-- TITLE -->
+  <div class="row text-center header">
+    <div class="col-11" *ngIf="user.employeeID !== employee.employeeID">
+      <h1>Request {{ 'Applications.ApplicationsTitle' | translate }} for {{ employee.firstName }}</h1>
+    </div>
+    <div class="col-11" *ngIf="user.employeeID === employee.employeeID">
+      <h1>Request {{ 'Applications.ApplicationsTitle' | translate }}</h1>
+    </div>
+    <div class="col-1">
+      <a class="btn btn-danger text-white" routerLink="/profile" [routerLinkActive]="['router-link-active']" (click)="isCancel=true">{{
+        'Common.Cancel' | translate }}</a>
+    </div>
+  </div>
+  <!-- SEARCH OR FILTER BY DEPARTMENT-->
+  <div class="row">
+    <div class="col-4 form-group">
+      <div class="input-group md-form form-sm form-1 pl-0">
+        <input type="text" name="application" class="form-control my-0 py-1" id="application" placeholder="Search for an application"
+          [(ngModel)]="applicationName" formControlName="applicationName">
+        <div class="input-group-prepend">
+          <button class="btn btn-primary"><i class="fa fa-search text-white"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 form-group">
+      <select class="form-control" placeholder="Select a Department" [(ngModel)]="depID" formControlName="departmentID">
+        <option value="null">Select a Department</option>
+        <option *ngFor="let department of departments" value="{{department.departmentID}}">{{department.departmentName}}</option>
+      </select>
+    </div>
+    <div class="col-4 form-group">
+      <!-- <select class="form-control" id="appPermission">
+        <option>Show or hide already permitted applications</option>
+        <option>Show</option>
+        <option>Hide</option>
+      </select> -->
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <!-- APPLICATIONS -->
+  <div class="row">
+    <div class="col-4" *ngFor="let application of filterApplications; let i = index" [attr.data-index]="i">
+      <div [ngClass]="applicationService.getRandomCardClass(application.department.departmentID)">
+        <div class="card-header">
+          {{ application.applicationName }}
+        </div>
+        <!-- REQUEST APPLICATION -->
+        <div class="card-body card-height">
+          <!-- <h5 class="card-title">{{ 'Applications.DescriptionTitle' | translate }}</h5> -->
+          <p class="card-text">{{ application.description }}</p>
+          <a class="btn btn-primary text-white" (click)="showDialog(application)" [class.disabled]="isPending[i]">{{
+            'Applications.RequestApplicationButton' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CANCEL AND GO TO PROFILE -->
+  <div class="row text-right cancel-btn">
+    <div class="col-12">
+      <a class="btn btn-danger text-white" routerLink="/profile" [routerLinkActive]="['router-link-active']" (click)="isCancel=true">{{
+        'Common.Cancel' | translate }}</a>
+    </div>
+  </div>
+  <div class="row text-center header">
+    <div class="col">
+      <p-dialog header="Request Application" [(visible)]="display" [modal]="true">
+        <p>Are you sure you want to request the current application?</p>
+        <button type="button" class="btn btn-primary" style="margin:5px;" (click)="onConfirm()">Confirm</button>
+        <button type="button" class="btn btn-danger" style="margin:5px;" (click)="onCancel()">Cancel</button>
+      </p-dialog>
+    </div>
+  </div>
+</div>

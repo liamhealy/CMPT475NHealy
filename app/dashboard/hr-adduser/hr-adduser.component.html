@@ -1,0 +1,118 @@
+<!-- HR ADD USER COMPONENT -->
+<div class="container">
+  <!-- HR ADD USER FORM -->
+  <form [formGroup]="userForm">
+    <!-- TITLE -->
+    <div class="row text-center header">
+      <div class="col">
+        <h1>{{ 'HRAddUser.HRAddUserTitle' | translate }}</h1>
+      </div>
+    </div>
+    <!-- USER PICTURE-->
+    <div class="row">
+      <div class="col-6 text-center">
+        <button type="button" class="btn btn-primary" style="position:absolute;margin-top:5px;margin-left:5px;"><i
+            class="fa fa-edit"></i></button>
+        <img src="assets/images/blank-profile.png" style="width:205px;height:215px;">
+      </div>
+      <!-- FIRST NAME, MIDDLE INITIAL, LAST NAME, EMAIL -->
+      <div class="col-6">
+        <div class="form-group">
+          <label for="firstName" class="required">{{ 'HRAddUser.FistName' | translate }}</label>
+          <input type="text" formControlName="firstName" [(ngModel)]="employee.firstName" id="firstName" class="form-control"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="lastName" class="required">{{ 'HRAddUser.LastName' | translate }}</label>
+          <input type="text" formControlName="lastName" [(ngModel)]="employee.lastName" class="form-control" id="lastName">
+        </div>
+        <div class="form-group">
+          <label for="email" class="required">{{ 'HRAddUser.Email' | translate }}</label>
+          <input type="email" formControlName="email" [(ngModel)]="employee.email" class="form-control" id="email"
+            placeholder="name@acme.com" pattern=".+@acme.com">
+          <div *ngIf="userForm.controls.email.invalid && userForm.controls.email.dirty" class="alert alert-danger" style="position:fixed;z-index: 999;">
+            Only emails ending in '@acme.com' are valid.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TITLE, DEPARTMENT, ROLE, PHONE NUMBER -->
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="title" class="required">{{ 'HRAddUser.Title' | translate }}</label>
+          <input type="text" formControlName="title" [(ngModel)]="employee.title" class="form-control" id="title">
+        </div>
+        <div class="form-group">
+          <label for="department" class="required">{{ 'HRAddUser.Department' | translate }}</label>
+          <select class="form-control" placeholder="Select a Department" [(ngModel)]="employee.department.departmentID"
+            formControlName="departmentID">
+            <option value="null" disabled>Select a Department</option>
+            <option *ngFor="let department of departments" value="{{department.departmentID}}">{{department.departmentName}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="role" class="required">{{ 'HRAddUser.Role' | translate }}</label>
+          <select class="form-control" placeholder="Select a Role" [(ngModel)]="employee.role.roleID" formControlName="roleID">
+            <option value="null" disabled>Select a Role</option>
+            <option *ngFor="let role of roles" value="{{role.roleID}}">{{role.roleName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-3 form-group text-center">
+            <label for="regionCodes" class="required">{{ 'HRAddUser.Region' | translate }}</label>
+            <p-dropdown [dropdownIcon]="Constants.DROPDOWN_ICON" autoWidth="false" [style]="{'width':'100%'}" [options]="regionCodes"
+              formControlName="regionCodes"></p-dropdown>
+          </div>
+          <div class="col-9 form-group">
+            <label for="phoneNumber" class="required">{{ 'HRAddUser.PhoneNumber' | translate }}</label>
+            <input type="number" formControlName="phoneNumber" [(ngModel)]="employee.phoneNumber" class="form-control" id="phoneNumber">
+            <div *ngIf="userForm.controls.regionCodes.value == null && (employee.phoneNumber)" class="alert alert-danger" style="position:fixed;z-index: 999;">
+              Please identify your region code.
+            </div>
+          </div>
+        </div>
+        <!-- OFFICE LOCATION, COUNTRY, MANAGER -->
+        <div class="row">
+          <div class="col-6 form-group">
+            <label for="officeLocaiton" class="required">{{ 'HRAddUser.OfficeLocation' | translate }}</label>
+            <select class="form-control" placeholder="Select a Location" [(ngModel)]="employee.location.locationID"
+              formControlName="locationID">
+              <option value="null" disabled>Select a Location</option>
+              <option *ngFor="let location of locations" value="{{location.locationID}}">{{location.officeLocation}}</option>
+            </select>
+          </div>
+          <div class="col-6 form-group">
+            <label for="country">{{ 'HRAddUser.Country' | translate }}</label>
+            <input type="text" formControlName="country" [(ngModel)]="employee.location.country" class="form-control"
+              id="country" readonly>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="employee.manager">
+          <label for="manager">{{ 'HRAddUser.Manager' | translate }}</label>
+          <div class="input-group md-form form-sm form-1 pl-0">
+            <p-autoComplete class="form-control autoComplete" formControlName="manager" [(ngModel)]="employee.manager.managerEmail"
+              [suggestions]="employeeEmails" (completeMethod)="search($event)"></p-autoComplete>
+            <span class="input-group-prepend">
+              <button class="btn btn-primary"><i class="fa fa-search text-white"></i></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ADD USER -->
+    <div class="row text-center header">
+      <div class="col">
+        <p-dialog header="Add Employee" [(visible)]="display" [modal]="true">
+          <p>Are you sure you want to add the employee?</p>
+          <button type="button" class="btn btn-primary" style="margin:5px;" (click)="onConfirm()">Confirm</button>
+          <button type="button" class="btn btn-danger" style="margin:5px;" (click)="onCancel()">Cancel</button>
+        </p-dialog>
+        <button type="button" class="btn btn-primary" [disabled]="userForm.invalid" (click)="showDialog()">{{
+          'HRAddUser.AddButton' | translate }}</button>
+      </div>
+    </div>
+  </form>
+</div>

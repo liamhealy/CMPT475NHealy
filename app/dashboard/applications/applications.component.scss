@@ -1,0 +1,26 @@
+.container {
+    max-width: 1700px;
+}
+.card-height {
+    min-height: 250px;
+    vertical-align: middle;
+}
+.add-card {
+    padding: 100px;
+}
+.add-card-btn {
+    width: 100px;
+    height: 50px;
+}
+.add-card-icon {
+    vertical-align: -webkit-baseline-middle;
+}
+.cancel-btn {
+    bottom:0; 
+    right:0; 
+    position:absolute; 
+    margin: 15px;
+}
+.header {
+    padding: 15px;
+}

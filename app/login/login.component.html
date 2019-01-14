@@ -1,0 +1,31 @@
+<!-- LOGIN COMPONENT -->
+<div class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <!-- LOGO AND TITLE -->
+            <img src="assets/images/logo.png" style="width:205px;height:215px;">
+            <h1><strong>{{ 'MainTitle' | translate }}</strong></h1>
+            <!-- EMAIL AND PASSWORD -->
+            <form [formGroup]="loginForm">
+                <div class="form-content">
+                    <div *ngIf="isError" class="alert alert-danger">
+                        {{ errorMsg }}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="user.email" formControlName="email" class="form-control input-underline input-lg"
+                            id="name" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="user.password" formControlName="password" class="form-control input-underline input-lg"
+                            id="password" placeholder="Password">
+                        <a class="forgotPass" [routerLink]="['/forgot-password']">{{
+                            'ForgotPassword.ForgotPasswordLink' | translate }}</a>
+                    </div>
+                </div>
+                <!-- LOGIN BUTTON -->
+                <button class="btn rounded-btn" [routerLink]="['/directory']" (click)="onLoggedin()" onSubmit="onLoggedin()"
+                    [disabled]="loginForm.invalid">{{ 'Login.LoginButton' | translate }}</button>
+            </form>
+        </div>
+    </div>
+</div>

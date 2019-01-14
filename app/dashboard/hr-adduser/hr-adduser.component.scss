@@ -1,0 +1,53 @@
+.container {
+    max-width: 1700px;
+}
+.card-height {
+    min-height: 250px;
+    vertical-align: middle;
+}
+.add-card {
+    padding: 100px;
+}
+.add-card-btn {
+    width: 100px;
+    height: 50px;
+}
+.add-card-icon {
+    vertical-align: -webkit-baseline-middle;
+}
+.header {
+    padding: 15px;
+}
+::ng-deep .ui-widget-header {
+    border: 0;
+    border-bottom: 2px solid #868e96;
+}
+label.required::after {
+    content: "*";
+    color: red;
+    position: absolute;
+}
+label.valid::after {
+    content: "*";
+    color: green;
+}
+/*.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+/*}  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+/*} */
+
+::ng-deep .ui-autocomplete {
+    width: -webkit-fill-available;
+}
+::ng-deep .ui-autocomplete-input {
+    width: -webkit-fill-available;
+}
+.autoComplete {
+    padding: 0;
+    border: 0;
+    margin-top: 2px;
+    height: 36px;
+}
+
